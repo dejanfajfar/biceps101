@@ -50,3 +50,161 @@ Furthermore, Azure Bicep integrates seamlessly with other Azure services and Dev
 8. **Resources for Further Learning**:
    - Provide resources and references for developers to continue learning about Azure Bicep, including official documentation, tutorials, and community forums.
    - Encourage developers to explore sample templates and contribute to the Bicep ecosystem through open-source projects and contributions.
+
+
+dejanfajfar: I am creating a azure bicep presentation and I would require code samples of increasing complexity. Can you propose what examples should be done
+
+GitHub Copilot: Sure, here are some examples of Azure Bicep code samples of increasing complexity:
+
+1. **Basic Resource Deployment**: This is the simplest example where you create a single resource, such as a storage account. You've already got this in your current code.
+
+2. **Multiple Resource Deployment**: In this example, you can create multiple resources, such as a storage account and a virtual network. This will introduce the concept of managing multiple resources in a single Bicep file.
+
+```bicep
+resource vnet 'Microsoft.Network/virtualNetworks@2020-06-01' = {
+  name: 'myVnet'
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+    subnets: [
+      {
+        name: 'default'
+        properties: {
+          addressPrefix: '10.0.0.0/24'
+        }
+      }
+    ]
+  }
+}
+```
+
+3. **Resource Dependencies**: This example can show how to manage dependencies between resources. For example, creating a virtual machine that depends on a virtual network and a storage account.
+
+```bicep
+resource vm 'Microsoft.Compute/virtualMachines@2020-06-01' = {
+  name: 'myVM'
+  location: location
+  dependsOn: [
+    vnet
+    storageAccount
+  ]
+  // VM properties here...
+}
+```
+
+4. **Parameterized Deployment**: This example can introduce the concept of parameters, which allow for more flexible and reusable Bicep files. You can parameterize aspects like the storage account SKU, location, etc.
+
+```bicep
+param storageAccountSku string = 'Standard_LRS'
+param location string =
+
+ resource
+
+Group().location
+```
+
+5. **Outputs**: This example can show how to use outputs to return values from the Bicep file, such as the connection string of a storage account.
+
+```bicep
+output storageAccountConnectionString string = storageAccount.properties.primaryEndpoints.blob
+```
+
+6. **Loops and Conditionals**: This example can introduce the concept of loops (for creating multiple similar resources) and conditionals (for creating resources based on certain conditions).
+
+```bicep
+param createExtraStorageAccount bool = false
+
+resource extraStorageAccounts 'Microsoft.Storage/storageAccounts@2021-04-01' = [for i in range(1, 3): {
+  name: '${storageAccountName}${i}'
+  location: location
+  sku: {
+    name: storageAccountSku
+  }
+  kind: 'StorageV2'
+}] if createExtraStorageAccount
+```
+
+7. **Modules**: This example can introduce the concept of modules, which allow for organizing Bicep code into reusable, standalone units.
+
+```bicep
+module storageAccountModule './storageAccount.bicep' = {
+  name: 'storageAccountModule'
+  params: {
+    storageAccountName: storageAccountName
+    storageAccountSku: storageAccountSku
+    location: location
+  }
+}
+```
+
+Each of these examples introduces new concepts and increases in complexity, giving a comprehensive overview of Azure Bicep's capabilities.
+
+dejanfajfar: Please generate files for each one of those points in the current workspace
+
+GitHub Copilot: Sure, here's how you can create files for each of the points mentioned in the Azure Bicep examples. 
+
+1. **Basic Resource Deployment**: Create a file named `basicResourceDeployment.bicep`.
+
+```bicep
+
+
+//
+
+ basicResourceDeployment.bicep
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
+  name: 'mystorageaccount'
+  location: 'westus'
+  sku: {
+    name: 'Standard_LRS'
+  }
+  kind: 'StorageV2'
+}
+```
+
+2. **Multiple Resource Deployment**: Create a file named `multipleResourceDeployment.bicep`.
+
+```bicep
+// multipleResourceDeployment.bicep
+// Code from the previous example...
+```
+
+3. **Resource Dependencies**: Create a file named `resourceDependencies.bicep`.
+
+```bicep
+// resourceDependencies.bicep
+// Code from the previous example...
+```
+
+4. **Parameterized Deployment**: Create a file named `parameterizedDeployment.bicep`.
+
+```bicep
+// parameterizedDeployment.bicep
+// Code from the previous example...
+```
+
+5. **Outputs**: Create a file named `outputs.bicep`.
+
+```bicep
+// outputs.bicep
+// Code from the previous example...
+```
+
+6. **Loops and Conditionals**: Create a file named `loopsAndConditionals.bicep`.
+
+```bicep
+// loopsAndConditionals.bicep
+// Code from the previous example...
+```
+
+7. **Modules**: Create a file named `modules.bicep`.
+
+```bicep
+// modules.bicep
+// Code from the previous example...
+```
+
+Each of these files should be created in your current workspace. You can use the `File > New File` menu option in Visual Studio Code to create each file, then copy the provided code into each file.
