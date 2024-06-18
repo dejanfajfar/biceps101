@@ -10,3 +10,5 @@ start:
 
 arm: $(ARM_FILES)
 
+clean:
+	rm -f $(ARM_FILES)
