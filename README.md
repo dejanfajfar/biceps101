@@ -52,7 +52,6 @@ Furthermore, Azure Bicep integrates seamlessly with other Azure services and Dev
    - Encourage developers to explore sample templates and contribute to the Bicep ecosystem through open-source projects and contributions.
 
 
-dejanfajfar: I am creating a azure bicep presentation and I would require code samples of increasing complexity. Can you propose what examples should be done
 
 GitHub Copilot: Sure, here are some examples of Azure Bicep code samples of increasing complexity:
 
